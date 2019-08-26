@@ -1,0 +1,16 @@
+{% macro render_field(field) %}
+  {{ field.label }}
+  {{ field(**kwargs)|safe }}
+  {% if field.errors %}
+    {% for error in field.errors %}
+      <span class="help-inline">{{ error }}</span>
+    {% endfor %}
+  {% endif %}
+{% endmacro %}
+
+{% macro render_checkbox(field) %}
+  {{ field.label }}
+  <label class="ckbox">
+    {{ field(**kwargs)|safe }}<span></span>
+  </label>
+{% endmacro %}

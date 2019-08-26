@@ -1,0 +1,19 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% set printed_messages = dict() %}
+    {% for category, message in messages %}
+      {% if message not in printed_messages %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+{% if error %}
+  <div class="alert alert-danger">{{error}}</div>
+{% endif %}
+
+{% if msg %}
+  <div class="alert alert-success">{{msg}}</div>
+{% endif %}
+
