@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% block title %}Оформление заказа{% endblock %}
+{% block body %}
+<div class="py-5 text-center">
+  <img class="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+  <h2>Checkout form</h2>
+  <p class="lead">Below is an example form built entirely with Bootstrap's form controls. Each required form group has a validation state that can be triggered by attempting to submit the form without completing it.</p>
+</div>
+
+<div class="row">
+  <div class="col-md-4 order-md-2 mb-4">
+    <h4 class="d-flex justify-content-between align-items-center mb-3">
+      <span class="text-muted">Your cart</span>
+      <span class="badge badge-secondary badge-pill">3</span>
+    </h4>
+    <ul class="list-group mb-3">
+      {% for order_product in order_products %}
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+          <h6 class="my-0">{{order_product.product.name}}</h6>
+          <small class="text-muted"></small>
+        </div>
+        <span class="text-muted">${{order_product.product.price}}</span>
+      </li>
+      {% endfor %}
+      <li class="list-group-item d-flex justify-content-between">
+        <span>Total (USD)</span>
+        <strong>$20</strong>
+      </li>
+    </ul>
+
+    <form class="card p-2">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Promo code">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-secondary">Redeem</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  {% from "includes/_formhelpers.html" import render_field, render_checkbox %}
+  <div class="col-md-8 order-md-1">
+    <h4 class="mb-3">Оформить заказ</h4>
+    <form class="needs-validation" method="post" action="">
+
+      <div class="mb-3">
+        {{ render_field(form.name, class_="form-control") }}
+      </div>
+      <div class="mb-3">
+        {{ render_field(form.products, class_="form-control") }}
+      </div>
+      <hr class="mb-4">
+      <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

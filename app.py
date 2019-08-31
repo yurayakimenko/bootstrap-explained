@@ -4,6 +4,7 @@ from models import Session, Product, OrderProduct, Order
 
 app = Flask(__name__)
 
+
 @app.route('/order/<int:order_id>', methods=['GET', 'POST'])
 def order(order_id):
     form = OrderForm(request.form)
@@ -37,8 +38,15 @@ def order(order_id):
         session.commit()
         return redirect(url_for('order', order_id=order.id))
 
+    return render_template('order_form.html', form=form, order_products=order_products)
 
-    return render_template('home.html', form=form, order_products=order_products)
+
+@app.route('/', methods=['GET', 'POST'])
+def marketplace():
+    session = Session()
+    products = session.query(Product).all()
+    return render_template('marketplace.html', products=products)
+
 
 app.secret_key = "some secret key"
 app.run('0.0.0.0', port=9000, debug=True)
