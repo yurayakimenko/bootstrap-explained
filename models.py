@@ -14,6 +14,9 @@ class Product(Base):
 
     price = Column(DECIMAL)
 
+    def __str__(self):
+        return f'{self.name} | {self.price}'
+
 
 class OrderProduct(Base):
     __tablename__ = 'order_products'
@@ -24,13 +27,17 @@ class OrderProduct(Base):
     order_id = Column(Integer, ForeignKey('orders.id', ondelete='CASCADE'))
     order = relationship('Order', back_populates='order_products')
 
-
+    def __str__(self):
+        return f'{self.product.name} | заказ #{self.order_id}'
 
 class Order(Base):
     __tablename__ = 'orders'
 
     id = Column(Integer, primary_key=True)
     order_products = relationship('OrderProduct', back_populates='order')
+
+    def __str__(self):
+        return f'#{self.id}'
 
 
 
